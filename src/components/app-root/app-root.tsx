@@ -6,6 +6,7 @@ import { Component, h } from '@stencil/core';
   shadow: true,
 })
 export class AppRoot {
+
   render() {
     return (
       <div>
@@ -14,7 +15,8 @@ export class AppRoot {
         </header>
 
         <main>
-          <p>content coming soon</p>
+          <cia-search></cia-search>
+          <div>text inputs</div>
         </main>
       </div>
     );

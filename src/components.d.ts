@@ -8,6 +8,8 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AppRoot {
     }
+    interface CiaSearch {
+    }
 }
 declare global {
     interface HTMLAppRootElement extends Components.AppRoot, HTMLStencilElement {
@@ -16,15 +18,25 @@ declare global {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
     };
+    interface HTMLCiaSearchElement extends Components.CiaSearch, HTMLStencilElement {
+    }
+    var HTMLCiaSearchElement: {
+        prototype: HTMLCiaSearchElement;
+        new (): HTMLCiaSearchElement;
+    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
+        "cia-search": HTMLCiaSearchElement;
     }
 }
 declare namespace LocalJSX {
     interface AppRoot {
     }
+    interface CiaSearch {
+    }
     interface IntrinsicElements {
         "app-root": AppRoot;
+        "cia-search": CiaSearch;
     }
 }
 export { LocalJSX as JSX };
@@ -32,6 +44,7 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "cia-search": LocalJSX.CiaSearch & JSXBase.HTMLAttributes<HTMLCiaSearchElement>;
         }
     }
 }

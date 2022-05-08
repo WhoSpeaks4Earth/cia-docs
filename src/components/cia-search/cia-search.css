@@ -1,0 +1,16 @@
+
+:host {
+  background-color: gray;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+}
+
+input {
+  font-size: 1.8rem;
+}
+
+button {
+  font-size: 1.8rem;
+}
