@@ -1,0 +1,17 @@
+:host {
+  background-color: #eee;
+  display: flex;
+  flex-direction: column;
+  padding: 2rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+}
+
+h4 {
+  display: inline-block;
+  font-weight: normal;
+  margin: 0px 0px 10px 0px;
+}

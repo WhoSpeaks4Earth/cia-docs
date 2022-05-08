@@ -8,6 +8,11 @@ import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
     interface AppRoot {
     }
+    interface CiaDocument {
+        "headerText": string;
+    }
+    interface CiaDocumentCensor {
+    }
     interface CiaSearch {
     }
     interface CiaSearchInput {
@@ -19,6 +24,18 @@ declare global {
     var HTMLAppRootElement: {
         prototype: HTMLAppRootElement;
         new (): HTMLAppRootElement;
+    };
+    interface HTMLCiaDocumentElement extends Components.CiaDocument, HTMLStencilElement {
+    }
+    var HTMLCiaDocumentElement: {
+        prototype: HTMLCiaDocumentElement;
+        new (): HTMLCiaDocumentElement;
+    };
+    interface HTMLCiaDocumentCensorElement extends Components.CiaDocumentCensor, HTMLStencilElement {
+    }
+    var HTMLCiaDocumentCensorElement: {
+        prototype: HTMLCiaDocumentCensorElement;
+        new (): HTMLCiaDocumentCensorElement;
     };
     interface HTMLCiaSearchElement extends Components.CiaSearch, HTMLStencilElement {
     }
@@ -34,6 +51,8 @@ declare global {
     };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
+        "cia-document": HTMLCiaDocumentElement;
+        "cia-document-censor": HTMLCiaDocumentCensorElement;
         "cia-search": HTMLCiaSearchElement;
         "cia-search-input": HTMLCiaSearchInputElement;
     }
@@ -41,12 +60,19 @@ declare global {
 declare namespace LocalJSX {
     interface AppRoot {
     }
+    interface CiaDocument {
+        "headerText"?: string;
+    }
+    interface CiaDocumentCensor {
+    }
     interface CiaSearch {
     }
     interface CiaSearchInput {
     }
     interface IntrinsicElements {
         "app-root": AppRoot;
+        "cia-document": CiaDocument;
+        "cia-document-censor": CiaDocumentCensor;
         "cia-search": CiaSearch;
         "cia-search-input": CiaSearchInput;
     }
@@ -56,6 +82,8 @@ declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
+            "cia-document": LocalJSX.CiaDocument & JSXBase.HTMLAttributes<HTMLCiaDocumentElement>;
+            "cia-document-censor": LocalJSX.CiaDocumentCensor & JSXBase.HTMLAttributes<HTMLCiaDocumentCensorElement>;
             "cia-search": LocalJSX.CiaSearch & JSXBase.HTMLAttributes<HTMLCiaSearchElement>;
             "cia-search-input": LocalJSX.CiaSearchInput & JSXBase.HTMLAttributes<HTMLCiaSearchInputElement>;
         }

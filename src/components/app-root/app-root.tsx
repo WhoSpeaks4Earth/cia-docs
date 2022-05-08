@@ -15,8 +15,7 @@ export class AppRoot {
         </header>
 
         <main>
-          <cia-search></cia-search>
-          <div>text inputs</div>
+          <cia-document-censor></cia-document-censor>
         </main>
       </div>
     );

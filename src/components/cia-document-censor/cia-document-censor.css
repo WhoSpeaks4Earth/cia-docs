@@ -1,0 +1,17 @@
+:host {
+  display: flex;
+  flex-direction: column;
+}
+
+textarea {
+  min-height: 120px;
+  overflow-y: scroll;
+  resize: vertical;
+  width: 100%;
+}
+
+p {
+  font-family: 'Courier New', Courier, monospace;
+  font-size: .9rem;
+  margin: 0px;
+}
