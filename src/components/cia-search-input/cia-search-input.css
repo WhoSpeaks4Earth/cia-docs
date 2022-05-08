@@ -1,0 +1,26 @@
+:host {
+  display: flex;
+  flex: 3;
+  flex-direction: column;
+  padding: 1rem;
+}
+
+label {
+  font-size: 1rem;
+}
+
+input {
+  font-size: 1.2rem;
+  line-height: 1.8rem;
+  margin: 4px 0px;
+}
+
+input::placeholder {
+  font-size: 1rem;
+}
+
+span {
+  color: #555;
+  font-size: .8rem;
+  margin-top: 6px;
+}

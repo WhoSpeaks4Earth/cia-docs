@@ -1,4 +1,4 @@
-import { Component, h } from '@stencil/core';
+import { Component, Host, h } from '@stencil/core';
 
 @Component({
   tag: 'cia-search',
@@ -10,10 +10,10 @@ export class CiaSearch {
   render() {
 
     return (
-      <div>
-        <input />
+      <Host>
+        <cia-search-input></cia-search-input>
         <button>Process</button>
-      </div>
+      </Host>
     )
   }
 }
