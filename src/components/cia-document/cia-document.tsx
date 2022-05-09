@@ -8,13 +8,16 @@ import { Component, Host, h, Prop } from "@stencil/core";
 export class CiaDocument {
 
   @Prop() headerText: string;
+  @Prop() actions: string[];
 
   render() {
     return (
       <Host>
         <div class="header">
           <h4>{this.headerText}</h4>
-          <div class="options">options</div>
+          <div>
+            {this.actions.map(action => <span>{action}</span>)}
+          </div>
         </div>
         <div>
           <slot name="document-text" />

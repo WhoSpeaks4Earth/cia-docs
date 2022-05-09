@@ -1,4 +1,4 @@
-import { Component, Host, h } from '@stencil/core';
+import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 
 @Component({
   tag: 'cia-search-input',
@@ -7,15 +7,24 @@ import { Component, Host, h } from '@stencil/core';
 })
 export class CiaSearchInput {
 
-  render() {
+  @Prop() text: string = '';
+  @Prop() isDisabled: boolean;
 
+  @Event() inputChanged: EventEmitter<string>;
+
+  private onInputChange = (e: Event) => this.inputChanged.emit((e.target as HTMLInputElement).value);
+
+  render() {
     return (
       <Host>
-        <label id="searchLabel" htmlFor="searchTerms">Text to Censor</label>
+        <label id="searchLabel" htmlFor="searchTerms">Keyword/Phrases</label>
         <input
           type="text" 
           name="searchTerms" 
-          placeholder={`Ex: Hello world “Boston Red Sox” ‘Pepperoni Pizza’, ‘Cheese Pizza’, beer"`}
+          placeholder={`Ex: Hello world “Boston Red Sox” ‘Pepperoni Pizza’, ‘Cheese Pizza’, beer`}
+          value={this.text}
+          onInput={this.onInputChange}
+          disabled={this.isDisabled}
           aria-labelledby="searchTerms" 
           aria-describedby="searchDesc" 
           aria-required="true" />

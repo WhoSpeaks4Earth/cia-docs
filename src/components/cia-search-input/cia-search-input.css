@@ -2,21 +2,18 @@
   display: flex;
   flex: 3;
   flex-direction: column;
-  padding: 1rem;
 }
 
 label {
   font-size: 1rem;
+  font-weight: bold;
 }
 
 input {
-  font-size: 1.2rem;
+  font-size: 1rem;
+  font-family: 'Courier New', Courier, monospace;
   line-height: 1.8rem;
   margin: 4px 0px;
-}
-
-input::placeholder {
-  font-size: 1rem;
 }
 
 span {
