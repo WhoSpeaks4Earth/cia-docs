@@ -21,7 +21,6 @@ export class CiaSearchProcessor {
   private onProcess = () => this.process.emit();
 
   render() {
-
     return (
       <Host>
         <cia-search-input text={this.searchText} />

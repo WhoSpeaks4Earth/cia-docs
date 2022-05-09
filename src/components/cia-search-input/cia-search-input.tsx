@@ -27,9 +27,10 @@ export class CiaSearchInput {
           aria-labelledby="searchTerms" 
           aria-describedby="searchDesc" 
           aria-required="true" />
-        <span id="searchDesc">Enter keywords or phrases separated by spaces or commas. Phrases must be enclosed in single or double-quotes.</span>
+        <span id="searchDesc">
+          Enter keywords or phrases separated by spaces or commas. Phrases must be enclosed in single or double-quotes.
+        </span>
       </Host>
-
     )
   }
 }
