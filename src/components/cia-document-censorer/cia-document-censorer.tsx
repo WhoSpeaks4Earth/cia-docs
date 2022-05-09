@@ -30,7 +30,7 @@ export class CiaDocumentCensorer {
         this.inputText = '';
         break;
       case 'copy':
-        console.log('copy');
+        navigator.clipboard.writeText(this.processedText);
         break;
       case 'export':
         console.log('export');
