@@ -1,11 +1,11 @@
 import { Component, Host, h, Prop, Event, EventEmitter, Listen } from '@stencil/core';
 
 @Component({
-  tag: 'cia-search',
-  styleUrl: 'cia-search.css',
+  tag: 'cia-search-processor',
+  styleUrl: 'cia-search-processor.css',
   shadow: true
 })
-export class CiaSearch {
+export class CiaSearchProcessor {
 
   @Prop() searchText: string = '';
   @Prop() isProcessable: boolean = false;

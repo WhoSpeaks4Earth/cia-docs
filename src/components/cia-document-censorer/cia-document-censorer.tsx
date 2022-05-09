@@ -53,9 +53,9 @@ export class CiaDocumentCensorer {
     );
   }
 
-  private renderSearch = () => {
+  private renderSearchProcessor = () => {
     return (
-      <cia-search 
+      <cia-search-processor 
         searchText={this.searchText}
         isProcessable={this.inputText !== '' && this.searchText !== ''} />
     );
@@ -76,7 +76,7 @@ export class CiaDocumentCensorer {
       <Host>
         {[
           this.renderOriginalDocument(),
-          this.renderSearch(),
+          this.renderSearchProcessor(),
           this.processedText === '' ? null : this.renderProcessedDocument()
         ]}
       </Host>
