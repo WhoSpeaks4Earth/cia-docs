@@ -16,7 +16,8 @@ export class CiaSearchInput {
   render() {
     return (
       <Host>
-        <label id="searchLabel" htmlFor="searchTerms">Keywords/Phrases to Censor</label>
+        <cia-header-title text="Keywords/Phrases to Censor" />
+        <label id="searchLabel" htmlFor="searchTerms" hidden>Keywords/Phrases to Censor</label>
         <input
           type="text" 
           name="searchTerms" 

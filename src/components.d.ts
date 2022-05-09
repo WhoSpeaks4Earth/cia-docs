@@ -14,15 +14,15 @@ export namespace Components {
     }
     interface CiaDocumentCensorer {
     }
+    interface CiaHeaderTitle {
+        "text": string;
+    }
     interface CiaSearchInput {
         "text": string;
     }
     interface CiaSearchProcessor {
         "isProcessable": boolean;
         "searchText": string;
-    }
-    interface CiaTitle {
-        "text": string;
     }
 }
 declare global {
@@ -44,6 +44,12 @@ declare global {
         prototype: HTMLCiaDocumentCensorerElement;
         new (): HTMLCiaDocumentCensorerElement;
     };
+    interface HTMLCiaHeaderTitleElement extends Components.CiaHeaderTitle, HTMLStencilElement {
+    }
+    var HTMLCiaHeaderTitleElement: {
+        prototype: HTMLCiaHeaderTitleElement;
+        new (): HTMLCiaHeaderTitleElement;
+    };
     interface HTMLCiaSearchInputElement extends Components.CiaSearchInput, HTMLStencilElement {
     }
     var HTMLCiaSearchInputElement: {
@@ -56,19 +62,13 @@ declare global {
         prototype: HTMLCiaSearchProcessorElement;
         new (): HTMLCiaSearchProcessorElement;
     };
-    interface HTMLCiaTitleElement extends Components.CiaTitle, HTMLStencilElement {
-    }
-    var HTMLCiaTitleElement: {
-        prototype: HTMLCiaTitleElement;
-        new (): HTMLCiaTitleElement;
-    };
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "cia-document": HTMLCiaDocumentElement;
         "cia-document-censorer": HTMLCiaDocumentCensorerElement;
+        "cia-header-title": HTMLCiaHeaderTitleElement;
         "cia-search-input": HTMLCiaSearchInputElement;
         "cia-search-processor": HTMLCiaSearchProcessorElement;
-        "cia-title": HTMLCiaTitleElement;
     }
 }
 declare namespace LocalJSX {
@@ -81,6 +81,9 @@ declare namespace LocalJSX {
     }
     interface CiaDocumentCensorer {
     }
+    interface CiaHeaderTitle {
+        "text"?: string;
+    }
     interface CiaSearchInput {
         "onInputChanged"?: (event: CustomEvent<string>) => void;
         "text"?: string;
@@ -91,16 +94,13 @@ declare namespace LocalJSX {
         "onSearchTextChanged"?: (event: CustomEvent<string>) => void;
         "searchText"?: string;
     }
-    interface CiaTitle {
-        "text"?: string;
-    }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "cia-document": CiaDocument;
         "cia-document-censorer": CiaDocumentCensorer;
+        "cia-header-title": CiaHeaderTitle;
         "cia-search-input": CiaSearchInput;
         "cia-search-processor": CiaSearchProcessor;
-        "cia-title": CiaTitle;
     }
 }
 export { LocalJSX as JSX };
@@ -110,9 +110,9 @@ declare module "@stencil/core" {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "cia-document": LocalJSX.CiaDocument & JSXBase.HTMLAttributes<HTMLCiaDocumentElement>;
             "cia-document-censorer": LocalJSX.CiaDocumentCensorer & JSXBase.HTMLAttributes<HTMLCiaDocumentCensorerElement>;
+            "cia-header-title": LocalJSX.CiaHeaderTitle & JSXBase.HTMLAttributes<HTMLCiaHeaderTitleElement>;
             "cia-search-input": LocalJSX.CiaSearchInput & JSXBase.HTMLAttributes<HTMLCiaSearchInputElement>;
             "cia-search-processor": LocalJSX.CiaSearchProcessor & JSXBase.HTMLAttributes<HTMLCiaSearchProcessorElement>;
-            "cia-title": LocalJSX.CiaTitle & JSXBase.HTMLAttributes<HTMLCiaTitleElement>;
         }
     }
 }

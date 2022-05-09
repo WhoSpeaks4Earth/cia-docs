@@ -20,7 +20,7 @@ export class CiaDocument {
     return (
       <Host>
         <div class="header">
-          <h4>{this.headerText}</h4>
+          <cia-header-title text={this.headerText} />
           <div>
             {
               this.actions.map(action => (
