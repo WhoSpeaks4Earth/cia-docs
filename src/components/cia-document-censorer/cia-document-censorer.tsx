@@ -8,18 +8,19 @@ import { Component, Host, h, State, Listen } from '@stencil/core';
 export class CiaDocumentCensorer {
 
   @State() inputText: string = '';
-  @State() searchText: string = '';
+  @State() search: {text: string, parsedTerms: string[]} = {text: '', parsedTerms: []};
   @State() processedText: string = '';
 
 
   @Listen('searchTextChanged')
- searchTextChangedHandler(event: CustomEvent<string>) {
-    this.searchText = event.detail;
+  searchTextChangedHandler(event: CustomEvent<string>) {
+    const newSearchText = event.detail;
+    this.search = {text: newSearchText, parsedTerms: this.getParsedTerms(newSearchText)};
   }
 
   @Listen('process')
   processHandler() {
-    this.processedText = this.inputText;
+    this.processedText = this.getCensoredDocumentText(this.inputText, this.search.parsedTerms);
   }
 
   @Listen('documentActionClicked')
@@ -38,7 +39,51 @@ export class CiaDocumentCensorer {
     }
   }
 
-  private onInputChange = (event: Event) => this.inputText = (event.target as HTMLInputElement).value;
+  private getParsedTerms = (text: string): string[] => {
+    const parsedTerms: string[] = [];
+
+    if (!text || text === '')
+      return parsedTerms;
+
+    const termParsers = [',', ' '];
+    let term = '';
+    const trimmedText = text.trim();
+    for (let i = 0; i < trimmedText.length; i++) {
+      const currentChar = trimmedText[i];
+      const isParserChar = termParsers.includes(currentChar);
+
+      if (isParserChar && term !== '') {
+        parsedTerms.push(term);
+        term = '';
+        continue;
+      }
+
+      if (i === trimmedText.length - 1 && term !== '') {
+        term += currentChar;
+        parsedTerms.push(term);
+        continue;
+      }
+
+      if (!isParserChar)
+        term += currentChar;
+    }
+
+    return parsedTerms;
+  }
+
+  private getCensoredDocumentText = (originalText: string, termsToCensor: string[]): string => {
+    const replaceTermsWith = 'XXXX';
+    let censoredText = originalText;
+
+    for (let i = 0; i < termsToCensor.length; i++) {
+      const term = termsToCensor[i];
+      censoredText = censoredText.replace(new RegExp(`${term}`, 'g'), replaceTermsWith);
+    }
+
+    return censoredText;
+  }
+
+  private onOriginalDocumentInputChange = (event: Event) => this.inputText = (event.target as HTMLInputElement).value;
 
   private renderOriginalDocument = () => {
     return (
@@ -48,16 +93,18 @@ export class CiaDocumentCensorer {
           placeholder="Paste or enter some text to censor"
           maxLength={10000}
           value={this.inputText}
-          onInput={this.onInputChange} />
+          onInput={this.onOriginalDocumentInputChange}
+          aria-required />
       </cia-document>
     );
   }
 
   private renderSearchProcessor = () => {
+    const hasValidSearchInput = this.search.parsedTerms.length > 0;
     return (
       <cia-search-processor 
-        searchText={this.searchText}
-        isProcessable={this.inputText !== '' && this.searchText !== ''} />
+        searchText={this.search.text}
+        isProcessable={this.inputText !== '' && hasValidSearchInput} />
     );
   }
 
@@ -70,6 +117,8 @@ export class CiaDocumentCensorer {
       </cia-document>
     );
   }
+
+  
 
   render() {
     return (
