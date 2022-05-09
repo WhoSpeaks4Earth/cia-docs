@@ -16,6 +16,8 @@ h4 {
 }
 
 span {
-  font-size: .9rem;
   color: teal;
+  cursor: pointer;
+  font-size: .9rem;
+  padding: 4px 10px;
 }

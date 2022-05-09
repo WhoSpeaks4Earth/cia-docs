@@ -9,7 +9,6 @@ export class CiaSearch {
 
   @Prop() searchText: string = '';
   @Prop() isProcessable: boolean = false;
-  @Prop() isActive: boolean = false;
 
   @Event() process: EventEmitter<null>;
   @Event() searchTextChanged: EventEmitter<string>;
@@ -25,8 +24,8 @@ export class CiaSearch {
 
     return (
       <Host>
-        <cia-search-input text={this.searchText} isDisabled={!this.isActive}></cia-search-input>
-        <button onClick={this.onProcess} disabled={!this.isProcessable}>Censor</button>
+        <cia-search-input text={this.searchText} />
+        <button onClick={this.onProcess} disabled={!this.isProcessable}>Process</button>
       </Host>
     )
   }

@@ -9,18 +9,16 @@ export namespace Components {
     interface AppRoot {
     }
     interface CiaDocument {
-        "actions": string[];
+        "actions": {name: string, isVisible: boolean}[];
         "headerText": string;
     }
     interface CiaDocumentCensorer {
     }
     interface CiaSearch {
-        "isActive": boolean;
         "isProcessable": boolean;
         "searchText": string;
     }
     interface CiaSearchInput {
-        "isDisabled": boolean;
         "text": string;
     }
 }
@@ -67,20 +65,19 @@ declare namespace LocalJSX {
     interface AppRoot {
     }
     interface CiaDocument {
-        "actions"?: string[];
+        "actions"?: {name: string, isVisible: boolean}[];
         "headerText"?: string;
+        "onDocumentActionClicked"?: (event: CustomEvent<string>) => void;
     }
     interface CiaDocumentCensorer {
     }
     interface CiaSearch {
-        "isActive"?: boolean;
         "isProcessable"?: boolean;
         "onProcess"?: (event: CustomEvent<null>) => void;
         "onSearchTextChanged"?: (event: CustomEvent<string>) => void;
         "searchText"?: string;
     }
     interface CiaSearchInput {
-        "isDisabled"?: boolean;
         "onInputChanged"?: (event: CustomEvent<string>) => void;
         "text"?: string;
     }

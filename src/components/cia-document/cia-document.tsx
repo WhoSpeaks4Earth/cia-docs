@@ -1,4 +1,4 @@
-import { Component, Host, h, Prop } from "@stencil/core";
+import { Component, Host, h, Prop, Event, EventEmitter } from "@stencil/core";
 
 @Component({
   tag: "cia-document",
@@ -8,7 +8,13 @@ import { Component, Host, h, Prop } from "@stencil/core";
 export class CiaDocument {
 
   @Prop() headerText: string;
-  @Prop() actions: string[];
+  @Prop() actions: {name: string, isVisible: boolean}[];
+
+  @Event() documentActionClicked: EventEmitter<string>;
+
+  private onActionClick = (actionName: string) => {
+    this.documentActionClicked.emit(actionName);
+  }
 
   render() {
     return (
@@ -16,7 +22,13 @@ export class CiaDocument {
         <div class="header">
           <h4>{this.headerText}</h4>
           <div>
-            {this.actions.map(action => <span>{action}</span>)}
+            {
+              this.actions.map(action => (
+                action.isVisible
+                ? <span onClick={() => this.onActionClick(action.name)}>{action.name}</span> 
+                : null
+              ))
+            }
           </div>
         </div>
         <div>

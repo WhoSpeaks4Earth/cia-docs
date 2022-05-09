@@ -9,35 +9,63 @@ export class CiaDocumentCensorer {
 
   @State() inputText: string = '';
   @State() searchText: string = '';
-  @State() censoredText: string = '';
+  @State() processedText: string = '';
 
 
   @Listen('searchTextChanged')
-  onSearchTextChangedHandler(event: CustomEvent<string>) {
+ searchTextChangedHandler(event: CustomEvent<string>) {
     this.searchText = event.detail;
   }
 
   @Listen('process')
-  onProcessHandler() {
-    this.censoredText = this.inputText;
+  processHandler() {
+    this.processedText = this.inputText;
+  }
+
+  @Listen('documentActionClicked')
+  documentActionClickedHandler(event: CustomEvent<string>) {
+    const actionName = event.detail;
+    switch (actionName) {
+      case 'clear':
+        this.inputText = '';
+        break;
+      case 'copy':
+        console.log('copy');
+        break;
+      case 'export':
+        console.log('export');
+        break;
+    }
   }
 
   private onInputChange = (event: Event) => this.inputText = (event.target as HTMLInputElement).value;
+
+  private renderOriginalDocument = () => {
+    return (
+      <cia-document headerText="Original Document" actions={[{name: 'clear', isVisible: this.inputText !== ''}]}>
+        <textarea
+          slot="document-text" 
+          placeholder="Paste or enter some text to censor"
+          maxLength={10000}
+          value={this.inputText}
+          onInput={this.onInputChange} />
+      </cia-document>
+    );
+  }
 
   private renderSearch = () => {
     return (
       <cia-search 
         searchText={this.searchText}
-        isActive={this.inputText !== ''}
         isProcessable={this.inputText !== '' && this.searchText !== ''} />
     );
   }
 
   private renderProcessedDocument = () => {
     return (
-      <cia-document headerText="Censored Document" actions={['copy', 'export']}>
+      <cia-document headerText="Censored Document" actions={[{name: 'copy', isVisible: true}, {name: 'export', isVisible: true}]}>
         <p slot="document-text">
-          <pre>{this.censoredText === '' ? 'No document has been processed yet...' : this.censoredText}</pre>
+          <pre>{this.processedText === '' ? 'No document has been processed yet...' : this.processedText}</pre>
         </p>
       </cia-document>
     );
@@ -46,17 +74,11 @@ export class CiaDocumentCensorer {
   render() {
     return (
       <Host>
-        <cia-document headerText="Original Document" actions={['clear']}>
-          <textarea
-            slot="document-text" 
-            placeholder="Enter some text to censor"
-            maxLength={10000}
-            value={this.inputText}
-            onInput={this.onInputChange} />
-        </cia-document>
-
-        {[this.renderSearch(), this.censoredText === '' ? null : this.renderProcessedDocument()]}
-        
+        {[
+          this.renderOriginalDocument(),
+          this.renderSearch(),
+          this.processedText === '' ? null : this.renderProcessedDocument()
+        ]}
       </Host>
     );
   }

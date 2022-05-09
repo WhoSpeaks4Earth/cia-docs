@@ -8,7 +8,6 @@ import { Component, Host, h, Prop, Event, EventEmitter } from '@stencil/core';
 export class CiaSearchInput {
 
   @Prop() text: string = '';
-  @Prop() isDisabled: boolean;
 
   @Event() inputChanged: EventEmitter<string>;
 
@@ -17,14 +16,13 @@ export class CiaSearchInput {
   render() {
     return (
       <Host>
-        <label id="searchLabel" htmlFor="searchTerms">Keyword/Phrases</label>
+        <label id="searchLabel" htmlFor="searchTerms">Keywords/Phrases to Censor</label>
         <input
           type="text" 
           name="searchTerms" 
           placeholder={`Ex: Hello world “Boston Red Sox” ‘Pepperoni Pizza’, ‘Cheese Pizza’, beer`}
           value={this.text}
           onInput={this.onInputChange}
-          disabled={this.isDisabled}
           aria-labelledby="searchTerms" 
           aria-describedby="searchDesc" 
           aria-required="true" />
