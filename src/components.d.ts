@@ -9,13 +9,19 @@ export namespace Components {
     interface AppRoot {
     }
     interface CiaDocument {
+        "actions": string[];
         "headerText": string;
     }
-    interface CiaDocumentCensor {
+    interface CiaDocumentCensorer {
     }
     interface CiaSearch {
+        "isActive": boolean;
+        "isProcessable": boolean;
+        "searchText": string;
     }
     interface CiaSearchInput {
+        "isDisabled": boolean;
+        "text": string;
     }
 }
 declare global {
@@ -31,11 +37,11 @@ declare global {
         prototype: HTMLCiaDocumentElement;
         new (): HTMLCiaDocumentElement;
     };
-    interface HTMLCiaDocumentCensorElement extends Components.CiaDocumentCensor, HTMLStencilElement {
+    interface HTMLCiaDocumentCensorerElement extends Components.CiaDocumentCensorer, HTMLStencilElement {
     }
-    var HTMLCiaDocumentCensorElement: {
-        prototype: HTMLCiaDocumentCensorElement;
-        new (): HTMLCiaDocumentCensorElement;
+    var HTMLCiaDocumentCensorerElement: {
+        prototype: HTMLCiaDocumentCensorerElement;
+        new (): HTMLCiaDocumentCensorerElement;
     };
     interface HTMLCiaSearchElement extends Components.CiaSearch, HTMLStencilElement {
     }
@@ -52,7 +58,7 @@ declare global {
     interface HTMLElementTagNameMap {
         "app-root": HTMLAppRootElement;
         "cia-document": HTMLCiaDocumentElement;
-        "cia-document-censor": HTMLCiaDocumentCensorElement;
+        "cia-document-censorer": HTMLCiaDocumentCensorerElement;
         "cia-search": HTMLCiaSearchElement;
         "cia-search-input": HTMLCiaSearchInputElement;
     }
@@ -61,18 +67,27 @@ declare namespace LocalJSX {
     interface AppRoot {
     }
     interface CiaDocument {
+        "actions"?: string[];
         "headerText"?: string;
     }
-    interface CiaDocumentCensor {
+    interface CiaDocumentCensorer {
     }
     interface CiaSearch {
+        "isActive"?: boolean;
+        "isProcessable"?: boolean;
+        "onProcess"?: (event: CustomEvent<null>) => void;
+        "onSearchTextChanged"?: (event: CustomEvent<string>) => void;
+        "searchText"?: string;
     }
     interface CiaSearchInput {
+        "isDisabled"?: boolean;
+        "onInputChanged"?: (event: CustomEvent<string>) => void;
+        "text"?: string;
     }
     interface IntrinsicElements {
         "app-root": AppRoot;
         "cia-document": CiaDocument;
-        "cia-document-censor": CiaDocumentCensor;
+        "cia-document-censorer": CiaDocumentCensorer;
         "cia-search": CiaSearch;
         "cia-search-input": CiaSearchInput;
     }
@@ -83,7 +98,7 @@ declare module "@stencil/core" {
         interface IntrinsicElements {
             "app-root": LocalJSX.AppRoot & JSXBase.HTMLAttributes<HTMLAppRootElement>;
             "cia-document": LocalJSX.CiaDocument & JSXBase.HTMLAttributes<HTMLCiaDocumentElement>;
-            "cia-document-censor": LocalJSX.CiaDocumentCensor & JSXBase.HTMLAttributes<HTMLCiaDocumentCensorElement>;
+            "cia-document-censorer": LocalJSX.CiaDocumentCensorer & JSXBase.HTMLAttributes<HTMLCiaDocumentCensorerElement>;
             "cia-search": LocalJSX.CiaSearch & JSXBase.HTMLAttributes<HTMLCiaSearchElement>;
             "cia-search-input": LocalJSX.CiaSearchInput & JSXBase.HTMLAttributes<HTMLCiaSearchInputElement>;
         }
