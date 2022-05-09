@@ -15,7 +15,7 @@ export class AppRoot {
         </header>
 
         <main>
-          <cia-document-censor></cia-document-censor>
+          <cia-document-censorer></cia-document-censorer>
         </main>
       </div>
     );
