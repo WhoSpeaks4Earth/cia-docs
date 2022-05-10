@@ -1,4 +1,6 @@
 import { Component, Host, h, State, Listen } from '@stencil/core';
+import { KeywordPhraseParserService } from '../../services/keyword-phrase-parser.service';
+import { TextParser } from '../../services/text-parser.interface';
 
 @Component({
   tag: 'cia-document-censorer',
@@ -7,15 +9,16 @@ import { Component, Host, h, State, Listen } from '@stencil/core';
 })
 export class CiaDocumentCensorer {
 
+  private keywordPhraseParser: TextParser = new KeywordPhraseParserService();
+
   @State() originalDocText: string = '';
   @State() search: {inputText: string, parsedTerms: string[]} = {inputText: '', parsedTerms: []};
   @State() processedDocText: string = '';
 
-
   @Listen('searchTextChanged')
   searchTextChangedHandler(event: CustomEvent<string>) {
     const newSearchText = event.detail;
-    this.search = {inputText: newSearchText, parsedTerms: this.getParsedTerms(newSearchText)};
+    this.search = {inputText: newSearchText, parsedTerms: this.keywordPhraseParser.getParsedTerms(newSearchText)};
   }
 
   @Listen('process')
@@ -36,51 +39,6 @@ export class CiaDocumentCensorer {
     }
   }
 
-
-  private getParsedTerms = (text: string): string[] => {
-    let parsedTerms: string[] = [];
-
-    if (!this.isValidSearchInput(text))
-      return parsedTerms;
-
-    parsedTerms = this.getRegExpParsedTerms(text);
-
-    return parsedTerms;
-  }
-
-  private isValidSearchInput(text: string): boolean {
-    if (!text || text === '' || !this.hasValidPhrasing(text))
-      return false;
-
-    return true;
-  }
-
-  private hasValidPhrasing(text: string): boolean {
-    const invalidPhraseTermination = ((text.match(/"/g) || []).length % 2 !== 0) || (text.match(/'/g) || []).length % 2 !== 0;
-    if (invalidPhraseTermination)
-      return false;
-
-    return true;
-  }
-
-  private getRegExpParsedTerms(text: string): string[] {
-    const regExTerms: string[] = [];
-
-    const myRegexp = /[^\s"',]+|"([^"]*)"|'([^']*)'/gi;
-    do {
-        var match = myRegexp.exec(text);
-        if (match != null)
-        {
-            const singleQuotePhrase = match[2];
-            const doubleQuotePhrase = match[1];
-            const unquotedKeyword = match[0];
-            const term = singleQuotePhrase ?? (doubleQuotePhrase ?? unquotedKeyword)
-            regExTerms.push(term);
-        }
-    } while (match != null);
-
-    return regExTerms;
-  }
 
   private getCensoredDocumentText = (originalText: string, termsToCensor: string[]): string => {
     const replaceTermsWith = 'XXXX';
@@ -135,7 +93,6 @@ export class CiaDocumentCensorer {
         {[
           this.renderOriginalDocument(),
           this.renderSearchProcessor(),
-          <div>Search terms: {this.search.parsedTerms.join(", ")}</div>,
           this.processedDocText === '' ? null : this.renderProcessedDocument()
         ]}
       </Host>
