@@ -38,10 +38,33 @@ export class CiaDocumentCensorer {
 
 
   private getParsedTerms = (text: string): string[] => {
-    const parsedTerms: string[] = [];
+    let parsedTerms: string[] = [];
 
-    if (!text || text === '')
+    if (!this.isValidSearchInput(text))
       return parsedTerms;
+
+    parsedTerms = this.getRegExpParsedTerms(text);
+
+    return parsedTerms;
+  }
+
+  private isValidSearchInput(text: string): boolean {
+    if (!text || text === '' || !this.hasValidPhrasing(text))
+      return false;
+
+    return true;
+  }
+
+  private hasValidPhrasing(text: string): boolean {
+    const invalidPhraseTermination = ((text.match(/"/g) || []).length % 2 !== 0) || (text.match(/'/g) || []).length % 2 !== 0;
+    if (invalidPhraseTermination)
+      return false;
+
+    return true;
+  }
+
+  private getRegExpParsedTerms(text: string): string[] {
+    const regExTerms: string[] = [];
 
     const myRegexp = /[^\s"',]+|"([^"]*)"|'([^']*)'/gi;
     do {
@@ -52,11 +75,11 @@ export class CiaDocumentCensorer {
             const doubleQuotePhrase = match[1];
             const unquotedKeyword = match[0];
             const term = singleQuotePhrase ?? (doubleQuotePhrase ?? unquotedKeyword)
-            parsedTerms.push(term);
+            regExTerms.push(term);
         }
     } while (match != null);
 
-    return parsedTerms;
+    return regExTerms;
   }
 
   private getCensoredDocumentText = (originalText: string, termsToCensor: string[]): string => {
@@ -112,6 +135,7 @@ export class CiaDocumentCensorer {
         {[
           this.renderOriginalDocument(),
           this.renderSearchProcessor(),
+          <div>Search terms: {this.search.parsedTerms.join(", ")}</div>,
           this.processedDocText === '' ? null : this.renderProcessedDocument()
         ]}
       </Host>
