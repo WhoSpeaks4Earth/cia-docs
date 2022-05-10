@@ -1,6 +1,6 @@
 # CIA Docs
 
-Sensor user-specified keywords and phrases from classified documents. Built using [Stencil](https://stenciljs.com/).
+Censor keywords and phrases from classified documents. Built using [Stencil](https://stenciljs.com/).
 
 
 ## Getting Started
