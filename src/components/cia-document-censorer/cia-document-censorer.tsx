@@ -33,9 +33,6 @@ export class CiaDocumentCensorer {
       case 'copy':
         navigator.clipboard.writeText(this.processedText);
         break;
-      case 'export':
-        console.log('export');
-        break;
     }
   }
 
@@ -100,7 +97,7 @@ export class CiaDocumentCensorer {
 
   private renderProcessedDocument = () => {
     return (
-      <cia-document headerText="Censored Document" actions={[{name: 'copy', isVisible: true}, {name: 'export', isVisible: true}]}>
+      <cia-document headerText="Censored Document" actions={[{name: 'copy', isVisible: this.processedText.length > 0}]}>
         <p slot="document-text">
           <pre>{this.processedText === '' ? 'No document has been processed yet...' : this.processedText}</pre>
         </p>
