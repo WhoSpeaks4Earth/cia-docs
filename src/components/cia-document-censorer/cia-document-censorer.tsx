@@ -1,5 +1,5 @@
 import { Component, Host, h, State, Listen } from '@stencil/core';
-import { KeywordPhraseParserService } from '../../services/keyword-phrase-parser.service';
+import { KeywordPhraseParserService } from '../../services/keyword-phrase-parser/keyword-phrase-parser.service';
 import { TextParser } from '../../services/text-parser.interface';
 
 @Component({

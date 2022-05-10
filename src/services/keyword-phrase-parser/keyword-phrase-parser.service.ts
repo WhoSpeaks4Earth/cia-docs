@@ -1,4 +1,4 @@
-import { TextParser } from "./text-parser.interface";
+import { TextParser } from "../text-parser.interface";
 
 
 export class KeywordPhraseParserService implements TextParser {
