@@ -1,11 +1,11 @@
 import { Component, h } from '@stencil/core';
 
 @Component({
-  tag: 'app-root',
-  styleUrl: 'app-root.css',
+  tag: 'cia-root',
+  styleUrl: 'cia-root.css',
   shadow: true,
 })
-export class AppRoot {
+export class CiaRoot {
 
   render() {
     return (
