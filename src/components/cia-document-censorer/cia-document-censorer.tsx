@@ -7,20 +7,20 @@ import { Component, Host, h, State, Listen } from '@stencil/core';
 })
 export class CiaDocumentCensorer {
 
-  @State() inputText: string = '';
-  @State() search: {text: string, parsedTerms: string[]} = {text: '', parsedTerms: []};
-  @State() processedText: string = '';
+  @State() originalDocText: string = '';
+  @State() search: {inputText: string, parsedTerms: string[]} = {inputText: '', parsedTerms: []};
+  @State() processedDocText: string = '';
 
 
   @Listen('searchTextChanged')
   searchTextChangedHandler(event: CustomEvent<string>) {
     const newSearchText = event.detail;
-    this.search = {text: newSearchText, parsedTerms: this.getParsedTerms(newSearchText)};
+    this.search = {inputText: newSearchText, parsedTerms: this.getParsedTerms(newSearchText)};
   }
 
   @Listen('process')
   processHandler() {
-    this.processedText = this.getCensoredDocumentText(this.inputText, this.search.parsedTerms);
+    this.processedDocText = this.getCensoredDocumentText(this.originalDocText, this.search.parsedTerms);
   }
 
   @Listen('documentActionClicked')
@@ -28,13 +28,14 @@ export class CiaDocumentCensorer {
     const actionName = event.detail;
     switch (actionName) {
       case 'clear':
-        this.inputText = '';
+        this.originalDocText = '';
         break;
       case 'copy':
-        navigator.clipboard.writeText(this.processedText);
+        navigator.clipboard.writeText(this.processedDocText);
         break;
     }
   }
+
 
   private getParsedTerms = (text: string): string[] => {
     const parsedTerms: string[] = [];
@@ -70,16 +71,16 @@ export class CiaDocumentCensorer {
     return censoredText;
   }
 
-  private onOriginalDocumentInputChange = (event: Event) => this.inputText = (event.target as HTMLInputElement).value;
+  private onOriginalDocumentInputChange = (event: Event) => this.originalDocText = (event.target as HTMLInputElement).value;
 
   private renderOriginalDocument = () => {
     return (
-      <cia-document headerText="Original Document" actions={[{name: 'clear', isVisible: this.inputText !== ''}]}>
+      <cia-document headerText="Original Document" actions={[{name: 'clear', isVisible: this.originalDocText !== ''}]}>
         <textarea
           slot="document-text" 
           placeholder="Paste or enter some text to censor"
           maxLength={10000}
-          value={this.inputText}
+          value={this.originalDocText}
           onInput={this.onOriginalDocumentInputChange}
           aria-required />
       </cia-document>
@@ -90,16 +91,16 @@ export class CiaDocumentCensorer {
     const hasValidSearchInput = this.search.parsedTerms.length > 0;
     return (
       <cia-search-processor 
-        searchText={this.search.text}
-        isProcessable={this.inputText !== '' && hasValidSearchInput} />
+        searchText={this.search.inputText}
+        isProcessable={this.originalDocText !== '' && hasValidSearchInput} />
     );
   }
 
   private renderProcessedDocument = () => {
     return (
-      <cia-document headerText="Censored Document" actions={[{name: 'copy', isVisible: this.processedText.length > 0}]}>
+      <cia-document headerText="Censored Document" actions={[{name: 'copy', isVisible: this.processedDocText.length > 0}]}>
         <p slot="document-text">
-          <pre>{this.processedText === '' ? 'No document has been processed yet...' : this.processedText}</pre>
+          <pre>{this.processedDocText === '' ? 'No document has been processed yet...' : this.processedDocText}</pre>
         </p>
       </cia-document>
     );
@@ -111,7 +112,7 @@ export class CiaDocumentCensorer {
         {[
           this.renderOriginalDocument(),
           this.renderSearchProcessor(),
-          this.processedText === '' ? null : this.renderProcessedDocument()
+          this.processedDocText === '' ? null : this.renderProcessedDocument()
         ]}
       </Host>
     );
