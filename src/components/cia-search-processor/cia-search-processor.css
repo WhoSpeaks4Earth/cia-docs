@@ -1,6 +1,6 @@
 
 :host {
-  background-color: #ebfefe;
+  background-color: var(--color-primary-light);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,10 +10,10 @@
 }
 
 button {
-  background-color: teal;
+  background-color: var(--color-primary);
   border: none;
-  box-shadow: 3px 3px 5px -3px #000000;
-  color: white;
+  box-shadow: 3px 3px 5px -3px #000;
+  color: #fff;
   font-size: 1.4rem;
   margin-top: 15px;
   padding: .4rem .6rem;
@@ -30,6 +30,6 @@ button:hover {
 }
 
 @keyframes darken {
-  from {background-color: teal;}
-  to {background-color: #005959;}
+  from {background-color: var(--color-primary);}
+  to {background-color: var(--color-primary-dark);}
 }
