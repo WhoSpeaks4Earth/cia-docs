@@ -45,28 +45,18 @@ export class CiaDocumentCensorer {
     if (!text || text === '')
       return parsedTerms;
 
-    const termParsers = [',', ' '];
-    let term = '';
-    const trimmedText = text.trim();
-    for (let i = 0; i < trimmedText.length; i++) {
-      const currentChar = trimmedText[i];
-      const isParserChar = termParsers.includes(currentChar);
-
-      if (isParserChar && term !== '') {
-        parsedTerms.push(term);
-        term = '';
-        continue;
-      }
-
-      if (i === trimmedText.length - 1 && term !== '') {
-        term += currentChar;
-        parsedTerms.push(term);
-        continue;
-      }
-
-      if (!isParserChar)
-        term += currentChar;
-    }
+    const myRegexp = /[^\s"',]+|"([^"]*)"|'([^']*)'/gi;
+    do {
+        var match = myRegexp.exec(text);
+        if (match != null)
+        {
+            const singleQuotePhrase = match[2];
+            const doubleQuotePhrase = match[1];
+            const unquotedKeyword = match[0];
+            const term = singleQuotePhrase ?? (doubleQuotePhrase ?? unquotedKeyword)
+            parsedTerms.push(term);
+        }
+    } while (match != null);
 
     return parsedTerms;
   }
@@ -101,10 +91,11 @@ export class CiaDocumentCensorer {
 
   private renderSearchProcessor = () => {
     const hasValidSearchInput = this.search.parsedTerms.length > 0;
-    return (
+    return ([
       <cia-search-processor 
         searchText={this.search.text}
-        isProcessable={this.inputText !== '' && hasValidSearchInput} />
+        isProcessable={this.inputText !== '' && hasValidSearchInput} />,
+        this.search.parsedTerms.join('-')]
     );
   }
 
@@ -117,8 +108,6 @@ export class CiaDocumentCensorer {
       </cia-document>
     );
   }
-
-  
 
   render() {
     return (

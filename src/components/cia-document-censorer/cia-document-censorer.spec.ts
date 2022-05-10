@@ -54,8 +54,20 @@ describe('cia-document-censorer', () => {
         components: [CiaDocumentCensorer],
         html: '<cia-document-censorer />',
       });
-      const text = 'test,again';
-      expect(rootInstance.getParsedTerms(text)).toEqual(['test', 'again']);
+      const text = 'term1,term2';
+      expect(rootInstance.getParsedTerms(text)).toEqual(['term1', 'term2']);
+    });
+
+    it('can parse quoted phrases', async () => {
+      const { rootInstance } = await newSpecPage({
+        components: [CiaDocumentCensorer],
+        html: '<cia-document-censorer />',
+      });
+      const variant1 = `"term1" 'phrase1a phrase1b' term3`;
+      const variant2 = `term1 "phrase1a phrase1b" "term3"`;
+      const expected = ['term1', 'phrase1a phrase1b', 'term3'];
+      expect(rootInstance.getParsedTerms(variant1)).toEqual(expected);
+      expect(rootInstance.getParsedTerms(variant2)).toEqual(expected);
     });
   });
 
@@ -68,6 +80,6 @@ describe('cia-document-censorer', () => {
       const text = 'the abc went to the xyz';
       const termsToCensor = ['abc', 'xyz'];
       expect(rootInstance.getCensoredDocumentText(text, termsToCensor)).toEqual('the XXXX went to the XXXX');
-    })
-  })
+    });
+  });
 });
