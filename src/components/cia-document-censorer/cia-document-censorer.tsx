@@ -91,11 +91,10 @@ export class CiaDocumentCensorer {
 
   private renderSearchProcessor = () => {
     const hasValidSearchInput = this.search.parsedTerms.length > 0;
-    return ([
+    return (
       <cia-search-processor 
         searchText={this.search.text}
-        isProcessable={this.inputText !== '' && hasValidSearchInput} />,
-        this.search.parsedTerms.join('-')]
+        isProcessable={this.inputText !== '' && hasValidSearchInput} />
     );
   }
 
