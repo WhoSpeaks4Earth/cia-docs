@@ -6,6 +6,9 @@
  */
 import { HTMLStencilElement, JSXBase } from "@stencil/core/internal";
 export namespace Components {
+    interface CiaContainer {
+        "maxWidthPx"?: number;
+    }
     interface CiaDocument {
         "actions": {name: string, isVisible: boolean}[];
         "headerText": string;
@@ -26,6 +29,12 @@ export namespace Components {
     }
 }
 declare global {
+    interface HTMLCiaContainerElement extends Components.CiaContainer, HTMLStencilElement {
+    }
+    var HTMLCiaContainerElement: {
+        prototype: HTMLCiaContainerElement;
+        new (): HTMLCiaContainerElement;
+    };
     interface HTMLCiaDocumentElement extends Components.CiaDocument, HTMLStencilElement {
     }
     var HTMLCiaDocumentElement: {
@@ -63,6 +72,7 @@ declare global {
         new (): HTMLCiaSearchProcessorElement;
     };
     interface HTMLElementTagNameMap {
+        "cia-container": HTMLCiaContainerElement;
         "cia-document": HTMLCiaDocumentElement;
         "cia-document-censorer": HTMLCiaDocumentCensorerElement;
         "cia-header-title": HTMLCiaHeaderTitleElement;
@@ -72,6 +82,9 @@ declare global {
     }
 }
 declare namespace LocalJSX {
+    interface CiaContainer {
+        "maxWidthPx"?: number;
+    }
     interface CiaDocument {
         "actions"?: {name: string, isVisible: boolean}[];
         "headerText"?: string;
@@ -95,6 +108,7 @@ declare namespace LocalJSX {
         "searchText"?: string;
     }
     interface IntrinsicElements {
+        "cia-container": CiaContainer;
         "cia-document": CiaDocument;
         "cia-document-censorer": CiaDocumentCensorer;
         "cia-header-title": CiaHeaderTitle;
@@ -107,6 +121,7 @@ export { LocalJSX as JSX };
 declare module "@stencil/core" {
     export namespace JSX {
         interface IntrinsicElements {
+            "cia-container": LocalJSX.CiaContainer & JSXBase.HTMLAttributes<HTMLCiaContainerElement>;
             "cia-document": LocalJSX.CiaDocument & JSXBase.HTMLAttributes<HTMLCiaDocumentElement>;
             "cia-document-censorer": LocalJSX.CiaDocumentCensorer & JSXBase.HTMLAttributes<HTMLCiaDocumentCensorerElement>;
             "cia-header-title": LocalJSX.CiaHeaderTitle & JSXBase.HTMLAttributes<HTMLCiaHeaderTitleElement>;
