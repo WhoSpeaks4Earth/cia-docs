@@ -9,7 +9,7 @@ export class CiaRoot {
 
   render() {
     return (
-      <div>
+      <cia-container maxWidthPx={1600}>
         <header>
           <h1>CIA Docs</h1>
         </header>
@@ -17,7 +17,7 @@ export class CiaRoot {
         <main>
           <cia-document-censorer></cia-document-censorer>
         </main>
-      </div>
+      </cia-container>
     );
   }
 }
