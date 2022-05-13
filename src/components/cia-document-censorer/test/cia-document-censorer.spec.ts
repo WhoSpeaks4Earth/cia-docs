@@ -1,5 +1,5 @@
 import { newSpecPage } from '@stencil/core/testing';
-import { CiaDocumentCensorer } from './cia-document-censorer';
+import { CiaDocumentCensorer } from '../cia-document-censorer';
 
 
 describe('cia-document-censorer', () => {
