@@ -50,6 +50,12 @@ describe('keyword/phrase parsing', () => {
     expect(parser.getParsedTerms(variant2)).toEqual(expected);
   });
 
+  it('can parse nested quoted phrases', async () => {
+    const text = `"term1" 'phrase1a "phrase1b"' term3`;
+    const expected = ['term1', 'phrase1a "phrase1b"', 'term3'];
+    expect(parser.getParsedTerms(text)).toEqual(expected);
+  });
+
   it('gives an empty array for bad input', async () => {
     const variant1 = `"term1" 'phrase1a phrase1b term3`;
     const variant2 = `term1 "phrase1a phrase1b' "term3"`;
