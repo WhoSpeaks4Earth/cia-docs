@@ -41,7 +41,7 @@ export class KeywordPhraseParserService implements TextParser {
             const singleQuotePhrase = match[2];
             const doubleQuotePhrase = match[1];
             const unquotedKeyword = match[0];
-            const term = singleQuotePhrase ?? (doubleQuotePhrase ?? unquotedKeyword)
+            const term = singleQuotePhrase ?? (doubleQuotePhrase ?? unquotedKeyword);
             regExTerms.push(term);
         }
     } while (match != null);

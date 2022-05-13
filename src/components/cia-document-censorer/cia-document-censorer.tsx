@@ -46,7 +46,7 @@ export class CiaDocumentCensorer {
 
     for (let i = 0; i < termsToCensor.length; i++) {
       const term = termsToCensor[i];
-      censoredText = censoredText.replace(new RegExp(`${term}`, 'g'), replaceTermsWith);
+      censoredText = censoredText.replace(new RegExp(term, 'g'), replaceTermsWith);
     }
 
     return censoredText;
